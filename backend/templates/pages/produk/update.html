@@ -1,0 +1,62 @@
+{% extends "layouts/main2.html" %}
+
+{% block title %}Data Gambar Produk{% endblock %}
+
+{% block css %}
+<style>
+    .product-images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .image-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .image-card:hover {
+        transform: scale(1.05);
+    }
+
+    .image-card img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .image-title {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .back-button {
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="back-button">
+        <a href="{% url 'list_produk' %}" class="btn btn-secondary">&larr; Kembali ke Daftar Produk</a>
+    </div>
+    
+    <h2 class="mb-4">Data Gambar Produk</h2>
+
+    <div class="product-images">
+        {% for gambar in gambar_produk %}
+        <div class="image-card">
+            <img src="{{ gambar.path_gambar.url }}" alt="Gambar Produk {{ gambar.no_produk.nama }}">
+            <p class="image-title">{{ gambar.no_produk.nama }}</p>
+        </div>
+        {% empty %}
+        <p>Belum ada gambar yang tersedia untuk produk ini.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

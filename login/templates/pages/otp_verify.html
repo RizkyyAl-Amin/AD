@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Verifikasi OTP - Alin Diesel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #2c2c2c, #ff914d);
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .otp-container {
+            width: 100%;
+            max-width: 400px;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .otp-container h2 {
+            margin-bottom: 20px;
+            color: orange;
+        }
+
+        .otp-container form .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .otp-container form .form-group input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .otp-container button {
+            width: 100%;
+            padding: 10px;
+            background: orange;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+        }
+
+        .otp-container button:hover {
+            background: #e07c00;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: orange;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="otp-container">
+        <h2>Verifikasi Kode OTP</h2>
+        <form action="{% url 'otp_verify' %}?email={{ email }}" method="POST">
+            {% csrf_token %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <p style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %};">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        
+            <div class="form-group">
+                <label for="otp_code">Masukkan Kode OTP</label>
+                <input type="hidden" name="email" value="{{ email }}">  <!-- Tambahkan input ini -->
+                <input type="number" id="otp_code" name="otp_code" class="form-control" placeholder="Kode OTP" required>
+            </div>
+            <button type="submit">Verifikasi</button>
+        </form>
+
+        <div class="footer">
+            <a href="/resend-otp/?email={{ email }}">Kirim ulang kode OTP</a>
+        </div>
+    </div>
+</body>
+
+</html>

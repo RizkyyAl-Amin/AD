@@ -1,0 +1,190 @@
+{% extends "layouts/main2.html" %}
+
+{% block title %}
+    {% if form_mode == "create" %}
+        Tambah Produk
+    {% else %}
+        Edit Produk
+    {% endif %}
+{% endblock %}
+
+{% block css %}
+<style>
+    .custom-dropdown {
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .custom-file-input {
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .custom-file-label {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+
+    .btn-primary {
+        background-color: #5a67d8;
+        border-radius: 8px;
+        padding: 10px 20px;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #434cdb;
+    }
+
+    .gambar-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .gambar-preview div {
+        position: relative;
+        display: inline-block;
+    }
+
+    .gambar-preview img {
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+
+    .gambar-preview input[type="checkbox"] {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid #ced4da;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+    <h2 class="mb-4">
+        {% if form_mode == "create" %}
+            Tambah Produk
+        {% else %}
+            Edit Produk
+        {% endif %}
+    </h2>
+    <form id="formProduk" method="POST" enctype="multipart/form-data" 
+        {% if form_mode == "create" %}
+            action="{% url 'create_produk' %}"
+        {% else %}
+            action="{% url 'update_produk' produk.id %}"
+        {% endif %}
+    >
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-6 mb-4">
+                <label for="namaProduk" class="form-label">Nama Produk</label>
+                <input type="text" class="form-control" id="namaProduk" name="nama" 
+                    placeholder="Masukkan nama produk"
+                    value="{{ produk.nama|default_if_none:'' }}"
+                    required>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="kategori" class="form-label">Kategori</label>
+                <select class="form-select form-control" id="kategori" name="kategori" required>
+                    <option value="">Pilih kategori</option>
+                    <option value="Minibus" {% if produk.kategori == "Elektronik" %}selected{% endif %}>Minibus</option>
+                    <option value="Truk" {% if produk.kategori == "Pakaian" %}selected{% endif %}>Truk</option>
+                    <option value="Alat" {% if produk.kategori == "Makanan" %}selected{% endif %}>Alat</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="harga" class="form-label">Harga Barang</label>
+                <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan harga barang" value="{{ produk.harga|default_if_none:'' }}" required>
+            </div>
+
+            <div class="col-md-12 mb-4">
+                {% if gambar_produk %}
+                <label for="gambar" class="form-label">Gambar yang Sudah Ada</label>
+                <small class="text-muted d-block">Centang gambar yang ingin diganti!</small>
+                <div class="gambar-preview">
+                    
+                    {% for gambar in gambar_produk %}
+                        <div>
+                            <img src="{{ gambar.path_gambar.url }}" alt="Gambar Produk">
+                            <input type="checkbox" name="hapus_gambar" value="{{ gambar.id }}" title="Hapus gambar ini">
+                            
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <label for="gambar" class="form-label mt-3">Upload Gambar Baru</label>
+                <input type="file" class="form-control " id="gambar" name="gambar[]" multiple>
+                <small class="text-muted">Pilih satu atau beberapa gambar baru.</small>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'list_produk' %}" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-primary">
+                {% if form_mode == "create" %}
+                    Simpan
+                {% else %}
+                    Simpan Perubahan
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const hargaInput = document.getElementById("harga");
+
+    // Format input saat mengetik: hanya angka dengan format ribuan
+    hargaInput.addEventListener("input", function(event) {
+        let value = event.target.value.replace(/\D/g, ""); // Hapus semua karakter non-digit
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Tambahkan titik setiap 3 angka
+        event.target.value = value;
+    });
+
+    document.getElementById("formProduk").addEventListener("submit", function(event) {
+        const namaProduk = document.getElementById("namaProduk").value.trim();
+        const kategori = document.getElementById("kategori").value.trim();
+        const harga = document.getElementById("harga").value.trim();
+        const gambar = document.getElementById("gambar").files;
+
+        // Validasi semua kolom
+        if (!namaProduk || !kategori || !harga || (gambar.length === 0 && form_mode === "create")) {
+            event.preventDefault(); // Mencegah form terkirim
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Semua kolom harus diisi dan minimal satu gambar harus diunggah!',
+            });
+            return;
+        }
+
+        // Hapus titik dari harga sebelum dikirim ke server
+        const rawHarga = harga.replace(/\./g, ""); 
+        hargaInput.value = rawHarga;
+    });
+</script>
+{% endblock %}

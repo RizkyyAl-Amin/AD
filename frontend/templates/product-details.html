@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Detail Produk - AD</title>
+  <meta name="description" content="Menyediakan Spare part truck dan alat berat">
+  <meta name="keywords" content="spare part, truck, alat berat, Alin Diesel">
+
+  <!-- Favicons -->
+  <link href="{% static 'landing/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'landing/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'landing/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landing/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'landing/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'landing/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landing/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'landing/css/main.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="product-details-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center me-auto me-lg-0">
+        <h1 class="sitename">AD</h1>
+        <span>.</span>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'index' %}">Beranda</a></li>
+          <li><a href="{% url 'index' %}#about">Tentang Kami</a></li>
+          <li><a href="{% url 'index' %}#product">Produk</a></li>
+          <li><a href="{% url 'index' %}#contact">Kontak</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Detail Produk</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'index' %}">Beranda</a></li>
+            <li class="current">Detail Produk</li>
+          </ol>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Product Details Section -->
+    <section id="product-details" class="product-details section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+          <!-- Slider untuk gambar produk -->
+          <div class="col-lg-8">
+            <div class="product-details-slider swiper init-swiper">
+              <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": { "delay": 5000 },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  }
+                }
+              </script>
+    
+              <div class="swiper-wrapper align-items-center">
+                {% for gambar in gambar_produk %}
+                <div class="swiper-slide">
+                  <img src="{{ gambar.path_gambar.url }}" alt="Gambar {{ produk.nama }}">
+                </div>
+                {% endfor %}
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+    
+          <!-- Informasi Produk -->
+          <div class="col-lg-4">
+            <div class="product-info" data-aos="fade-up" data-aos-delay="200">
+              <h3>Informasi Produk</h3>
+              <ul>
+                <li><strong>Kategori</strong>: {{ produk.kategori }}</li>
+                <li><strong>Nama Produk</strong>: {{ produk.nama }}</li>
+                <li><strong>Harga</strong>: Rp{{ produk.harga|floatformat:0 }}</li>
+              </ul>
+            </div>
+            <div class="product-description" data-aos="fade-up" data-aos-delay="300">
+              <h2>Deskripsi Produk</h2>
+              <p>
+                Deskripsi produk {{ produk.nama }} dapat ditambahkan di sini. Jika membutuhkan atribut deskripsi, tambahkan pada model `Produk`.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+              <span class="sitename">Alin Diesel</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>Jl. Raya Kasang Pudak</p>
+              <p>Kumpek Ulu</p>
+              <p class="mt-3"><strong>Telepon:</strong> <span>+62 815850 4442</span></p>
+              <p><strong>Email:</strong> <span>@alin_diesel03</span></p>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Tautan</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="{% url 'index' %}"> Beranda</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="{% url 'index' %}#about"> Tentang Kami</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="{% url 'index' %}#product"> Produk</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="{% url 'index' %}#contact"> Kontak</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="container text-center">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Alin Diesel</strong> <span>All Rights Reserved</span></p>
+        <!-- <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div> -->
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'landing/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'landing/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'landing/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'landing/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'landing/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'landing/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'landing/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'landing/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'landing/js/main.js' %}"></script>
+
+</body>
+
+</html>
