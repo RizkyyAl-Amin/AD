@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 def index(request):
     produk_list = Produk.objects.prefetch_related('gambar_produk').all()
     kategori_list = Kategori.objects.all()
-    nomor_wa = "628123456789"   
+    nomor_wa = "6289527310809"   
     return render(request, 'index.html', {
         'produk_list': produk_list,
         'kategori_list': kategori_list,
