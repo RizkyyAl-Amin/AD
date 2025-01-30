@@ -1,0 +1,67 @@
+{% extends "layouts/main2.html" %}
+
+{% block title %}
+    Tambah Akun
+{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+    <h2 class="mb-4">Tambah Akun</h2>
+    <form id="formAkun" method="POST" action="{% url 'create_akun' %}">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-6 mb-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email" required>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="password1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password1" name="password1" placeholder="Masukkan password" required>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="password2" class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-control" id="password2" name="password2" placeholder="Ulangi password" required>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'list_akun' %}" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById("formAkun").addEventListener("submit", function(event) {
+        const email = document.getElementById("email").value.trim();
+        const username = document.getElementById("username").value.trim();
+        const password1 = document.getElementById("password1").value.trim();
+        const password2 = document.getElementById("password2").value.trim();
+
+        if (!email || !username || !password1 || !password2) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Semua kolom harus diisi!'
+            });
+            return;
+        }
+        
+        if (password1 !== password2) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password tidak cocok!'
+            });
+        }
+    });
+</script>
+{% endblock %}

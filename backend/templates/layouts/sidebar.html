@@ -2,45 +2,21 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/dashboard' %}active{% endif %}" href="#">
-                <i class="bi bi-grid menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/artikel/' %}active{% endif %}" href="#">
-                <i class="bi bi-newspaper menu-icon"></i>
-                <span class="menu-title">Artikel</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/kategori/' %}active{% endif %}" href="#">
-                <i class="bi bi-tags menu-icon"></i>
-                <span class="menu-title">Kategori Artikel</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/produk/' %}active{% endif %}" href="#">
+            <a class="nav-link {% if request.path == '/produk/' %}active{% endif %}" href="{% url 'list_produk' %}">
                 <i class="bi bi-box-seam menu-icon"></i>
                 <span class="menu-title">Produk</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/laporan-bulanan/' %}active{% endif %}" href="#">
-                <i class="bi bi-file-earmark-bar-graph menu-icon"></i>
-                <span class="menu-title">Laporan</span>
+            <a class="nav-link {% if request.path == '/kategori/' %}active{% endif %}" href="{% url 'list_kategori' %}">
+                <i class="bi bi-tags menu-icon"></i>
+                <span class="menu-title">Kategori Produk</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/dataUser/' %}active{% endif %}" href="#">
+            <a class="nav-link {% if request.path == '/akun/' %}active{% endif %}" href="{% url 'list_akun' %}">
                 <i class="bi bi-people menu-icon"></i>
-                <span class="menu-title">User</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/riwayat-transaksi-admin/' %}active{% endif %}" href="#">
-                <i class="bi bi-clock-history menu-icon"></i>
-                <span class="menu-title">Riwayat Transaksi</span>
+                <span class="menu-title">Akun</span>
             </a>
         </li>
     </ul>

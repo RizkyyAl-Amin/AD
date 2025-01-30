@@ -1,14 +1,16 @@
 from django.shortcuts import render
-from backend.models import Produk, GambarProduk
+from backend.models import Produk, GambarProduk, Kategori
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 def index(request):
     produk_list = Produk.objects.prefetch_related('gambar_produk').all()
-    kategori_list = Produk.objects.values_list('kategori', flat=True).distinct()
+    kategori_list = Kategori.objects.all()
+    nomor_wa = "628123456789"   
     return render(request, 'index.html', {
         'produk_list': produk_list,
-        'kategori_list': kategori_list
+        'kategori_list': kategori_list,
+        'nomor_wa': nomor_wa,
     })
 
 def product_details(request, no_produk):

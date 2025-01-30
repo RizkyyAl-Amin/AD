@@ -1179,6 +1179,24 @@ section,
   line-height: 0;
 }
 
+.product .product-item .product-info .whatsapp-link {
+  position: absolute !important;
+  right: 90px !important;  
+  font-size: 24px !important;  
+  top: calc(50% - 14px) !important;  
+  color: color-mix(in srgb, var(--default-color), transparent 30%) !important;
+  transition: 0.3s !important;
+  line-height: 0 !important;
+}
+
+
+.product .product-item .product-info .whatsapp-link:hover {
+  color: var(--accent-color) !important;  
+}
+
+
+
+
 .product .product-item .product-info .preview-link:hover,
 .product .product-item .product-info .details-link:hover {
   color: var(--accent-color);

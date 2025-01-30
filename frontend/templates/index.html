@@ -286,21 +286,28 @@
           <ul class="product-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
             <li data-filter="*" class="filter-active">Semua Produk</li>
             {% for kategori in kategori_list %}
-            <li data-filter=".filter-category-{{ forloop.counter }}">Kategori {{ kategori }}</li>
+            <li data-filter=".filter-category-{{ kategori.id }}">{{ kategori.nama }}</li>
             {% endfor %}
           </ul><!-- End Product Filters -->
 
           <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
             {% for produk in produk_list %}
-            <div class="col-lg-4 col-md-6 product-item isotope-item filter-category-{{ forloop.counter }}">
+            <div class="col-lg-4 col-md-6 product-item isotope-item filter-category-{{ produk.kategori.id }}">
               {% if produk.gambar_produk.first %}
               <img src="{{ produk.gambar_produk.first.path_gambar.url }}" class="img-fluid" alt="{{ produk.nama }}">
               {% else %}
               <img src="{% static 'landing/img/products/default.jpg' %}" class="img-fluid" alt="Default Image">
               {% endif %}
               <div class="product-info">
-                <h4>{{ produk.nama }} ({{ produk.kategori }})</h4>
+                <h4>{{ produk.nama }} ({{ produk.kategori.nama }})</h4>
                 <p>Rp {{ produk.harga|intcomma }}</p>
+
+
+                <a href="https://wa.me/{{ nomor_wa }}?text=Apakah produk {{ produk.nama }} masih ada?"
+                  title="Hubungi WhatsApp" class="whatsapp-link">
+                  <i class="bi bi-whatsapp"></i>
+                </a>
+
                 <a href="{% if produk.gambar_produk.first %}{{ produk.gambar_produk.first.path_gambar.url }}{% else %}{% static 'landing/img/products/default.jpg' %}{% endif %}"
                   title="{{ produk.nama }}" data-gallery="product-gallery-category-{{ forloop.counter }}"
                   class="glightbox preview-link">
@@ -309,12 +316,15 @@
                 <a href="{% url 'product_details' produk.no_produk %}" title="Detail Produk" class="details-link">
                   <i class="bi bi-link-45deg"></i>
                 </a>
+
               </div>
+
             </div><!-- End Product Item -->
             {% endfor %}
           </div><!-- End Product Container -->
         </div>
       </div>
+
 
 
     </section><!-- /Product Section -->
@@ -391,7 +401,7 @@
               <p><strong>Email:</strong> <span>@alin_diesel03</span></p>
               <a href="/login/" style="color: #ff914d; text-decoration: none; font-size: 14px; font-weight: bold;"
                 onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">
-              Login
+                Login
               </a>
 
             </div>

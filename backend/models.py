@@ -1,11 +1,17 @@
 from django.db import models
-import os
-from django.conf import settings
+
+class Kategori(models.Model):
+    nama = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nama
+
 
 class Produk(models.Model):
     no_produk = models.CharField(max_length=20, unique=True, editable=False)
     nama = models.CharField(max_length=100)
-    kategori = models.CharField(max_length=50)
+    kategori = models.ForeignKey(Kategori, on_delete=models.CASCADE, related_name="produk")
+    deskripsi = models.TextField(blank=True, null=True)
     harga = models.DecimalField(max_digits=10, decimal_places=2)
 
     def save(self, *args, **kwargs):
@@ -23,7 +29,7 @@ class GambarProduk(models.Model):
         return f'products/{filename}'
 
     path_gambar = models.ImageField(upload_to=upload_to_products)
-    no_produk = models.ForeignKey('Produk', on_delete=models.CASCADE, related_name='gambar_produk')
+    no_produk = models.ForeignKey(Produk, on_delete=models.CASCADE, related_name='gambar_produk')
 
     def __str__(self):
         return f"Gambar untuk {self.no_produk.nama}"

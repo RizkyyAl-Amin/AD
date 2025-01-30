@@ -98,7 +98,7 @@
               </script>
     
               <div class="swiper-wrapper align-items-center">
-                {% for gambar in gambar_produk %}
+                {% for gambar in produk.gambar_produk.all %}
                 <div class="swiper-slide">
                   <img src="{{ gambar.path_gambar.url }}" alt="Gambar {{ produk.nama }}">
                 </div>
@@ -113,7 +113,7 @@
             <div class="product-info" data-aos="fade-up" data-aos-delay="200">
               <h3>Informasi Produk</h3>
               <ul>
-                <li><strong>Kategori</strong>: {{ produk.kategori }}</li>
+                <li><strong>Kategori</strong>: {{ produk.kategori.nama }}</li>
                 <li><strong>Nama Produk</strong>: {{ produk.nama }}</li>
                 <li><strong>Harga</strong>: Rp{{ produk.harga|floatformat:0 }}</li>
               </ul>
@@ -121,13 +121,18 @@
             <div class="product-description" data-aos="fade-up" data-aos-delay="300">
               <h2>Deskripsi Produk</h2>
               <p>
-                Deskripsi produk {{ produk.nama }} dapat ditambahkan di sini. Jika membutuhkan atribut deskripsi, tambahkan pada model `Produk`.
+                {% if produk.deskripsi %}
+                  {{ produk.deskripsi }}
+                {% else %}
+                  Deskripsi produk {{ produk.nama }} belum tersedia.
+                {% endif %}
               </p>
             </div>
           </div>
         </div>
       </div>
     </section>
+    
     
 
   </main>

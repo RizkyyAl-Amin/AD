@@ -1,0 +1,47 @@
+{% extends "layouts/main2.html" %}
+
+{% block title %}
+    {% if form_mode == "create" %}
+        Tambah Kategori
+    {% else %}
+        Edit Kategori
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+    <h2 class="mb-4">
+        {% if form_mode == "create" %}
+            Tambah Kategori
+        {% else %}
+            Edit Kategori
+        {% endif %}
+    </h2>
+    <form id="formKategori" method="POST" 
+        {% if form_mode == "create" %}
+            action="{% url 'create_kategori' %}"
+        {% else %}
+            action="{% url 'update_kategori' kategori.id %}"
+        {% endif %}
+    >
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="namaKategori" class="form-label">Nama Kategori</label>
+            <input type="text" class="form-control" id="namaKategori" name="nama" 
+                placeholder="Masukkan nama kategori"
+                value="{{ kategori.nama|default_if_none:'' }}"
+                required>
+        </div>
+        <div>
+            <a href="{% url 'list_kategori' %}" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-primary">
+                {% if form_mode == "create" %}
+                    Simpan
+                {% else %}
+                    Simpan Perubahan
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
