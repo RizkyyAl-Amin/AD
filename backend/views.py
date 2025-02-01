@@ -57,8 +57,8 @@ def update_produk(request, produk_id):
         if produk_form.is_valid():
             produk = produk_form.save(commit=False)
 
-            raw_harga = request.POST.get('harga', '0').replace('.', '').replace(',', '')
-            produk.harga = int(raw_harga) / 100  
+            raw_harga = request.POST.get('harga', '0').replace('.', '').replace(',', '')  
+            produk.harga = int(raw_harga)  
             produk.save()
 
             for file in files:
@@ -82,6 +82,7 @@ def update_produk(request, produk_id):
         'kategori_list': kategori_list,
     }
     return render(request, 'pages/produk/produk_form.html', context)
+
 
 
 def delete_produk(request, pk):

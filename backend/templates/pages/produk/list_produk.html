@@ -19,7 +19,6 @@
                             <thead>
                                 <tr class="text-center">
                                     <th class="text-center" width="50">#</th>
-                                    
                                     <th>Nama Produk</th>
                                     <th>Kategori</th>
                                     <th>Harga Barang</th>
@@ -35,11 +34,9 @@
                                     <td>{{ produk.nama }}</td>
                                     <td>{{ produk.kategori.nama }}</td>
                                     <td>Rp {{ produk.harga|intcomma }}</td>
-                                    <td>
-                                        {% with produk.deskripsi.split|slice:":5" as words %}
-                                            {{ words|join:" " }}{% if produk.deskripsi.split|length > 5 %}...{% endif %}
-                                        {% endwith %}
-                                    </td>
+                                    <td>{{ produk.deskripsi|truncatewords_html:4|safe }}</td>
+
+                                    
                                     
                                     <td class="text-center">
                                         <a href="{% url 'update_produk' produk.id %}" class="btn btn-primary">Edit</a>

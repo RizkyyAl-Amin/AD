@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,14 +116,14 @@
               <ul>
                 <li><strong>Kategori</strong>: {{ produk.kategori.nama }}</li>
                 <li><strong>Nama Produk</strong>: {{ produk.nama }}</li>
-                <li><strong>Harga</strong>: Rp{{ produk.harga|floatformat:0 }}</li>
+                <li><strong>Harga</strong>: Rp {{ produk.harga|intcomma }}</li>
               </ul>
             </div>
             <div class="product-description" data-aos="fade-up" data-aos-delay="300">
               <h2>Deskripsi Produk</h2>
               <p>
                 {% if produk.deskripsi %}
-                  {{ produk.deskripsi }}
+                  {{ produk.deskripsi|safe }}
                 {% else %}
                   Deskripsi produk {{ produk.nama }} belum tersedia.
                 {% endif %}

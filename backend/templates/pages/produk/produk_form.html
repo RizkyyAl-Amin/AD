@@ -7,7 +7,12 @@
         Edit Produk
     {% endif %}
 {% endblock %}
-
+{%block css %}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
 <style>
     .gambar-preview {
@@ -78,7 +83,7 @@
             </div>
             <div class="col-md-12 mb-4">
                 <label for="deskripsi" class="form-label">Deskripsi Produk</label>
-                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi produk">{{ produk.deskripsi|default_if_none:'' }}</textarea>
+                <textarea class="form-control summernote" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi produk">{{ produk.deskripsi|default_if_none:'' }}</textarea>
             </div>
             <div class="col-md-12 mb-4">
                 {% if gambar_produk %}
@@ -141,6 +146,27 @@
 
         const rawHarga = harga.replace(/\./g, ""); 
         hargaInput.value = rawHarga;
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     });
 </script>
 {% endblock %}

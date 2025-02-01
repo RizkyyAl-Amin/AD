@@ -12,7 +12,7 @@ class Produk(models.Model):
     nama = models.CharField(max_length=100)
     kategori = models.ForeignKey(Kategori, on_delete=models.CASCADE, related_name="produk")
     deskripsi = models.TextField(blank=True, null=True)
-    harga = models.DecimalField(max_digits=10, decimal_places=2)
+    harga = models.IntegerField()  
 
     def save(self, *args, **kwargs):
         if not self.no_produk:
@@ -22,6 +22,7 @@ class Produk(models.Model):
 
     def __str__(self):
         return self.nama
+
 
 
 class GambarProduk(models.Model):
